@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hollando - Marketplace Simple</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- CONTENEUR PRINCIPAL DE L'APP -->
+    <div id="app">
+        
+        <!-- EN-TÊTE AVEC LOGO ET PANIER -->
+        <header>
+            <div class="logo">
+                <div class="logo-icon">H</div>
+                <span>Hollando</span>
+            <!-- PAGE PROFIL VENDEUR -->
+        <div id="seller-profile-page" class="page hidden">
+            <h2>Profil Vendeur</h2>
+            
+            <!-- Informations vendeur -->
+            <div class="seller-info-card">
+                <div class="seller-avatar">
+                    <span>👤</span>
+                </div>
+                <div class="seller-details">
+                    <h3>Nom de la boutique</h3>
+                    <p>📍 Cocody, Abidjan, Côte d'Ivoire</p>
+                    <p>📞 +225 07 12 34 56 78</p>
+                    <div class="seller-rating">
+                        ⭐⭐⭐⭐⭐ 4.8 (245 avis)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Actions rapides -->
+            <div class="quick-actions">
+                <button class="action-btn">💬 Contacter</button>
+                <button class="action-btn">📍 Voir sur la carte</button>
+                <button class="action-btn">👁️ Voir tous les produits</button>
+            </div>
+            
+            <!-- Produits du vendeur -->
+            <div class="vendor-products">
+                <h3>Produits de ce vendeur</h3>
+                <div class="products-grid" id="vendor-products-list">
+                    <!-- Produits générés par JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CHAT -->
+        <div id="chat-page" class="page hidden">
+            <div class="chat-header">
+                <button onclick="showPage('home')" class="back-btn">←</button>
+                <div class="chat-contact">
+                    <div class="contact-avatar">👤</div>
+                    <div class="contact-info">
+                        <h3>Vendeur TechStore</h3>
+                        <p class="contact-status">En ligne</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="message received">
+                    <p>Bonjour ! Puis-je vous aider ?</p>
+                    <span class="message-time">14:30</span>
+                </div>
+                <div class="message sent">
+                    <p>Bonjour, le téléphone est-il encore disponible ?</p>
+                    <span class="message-time">14:32</span>
+                </div>
+                <div class="message received">
+                    <p>Oui, il est en stock. Voulez-vous passer le voir ?</p>
+                    <span class="message-time">14:35</span>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Tapez votre message...">
+                <button id="send-message-btn">📤</button>
+            </div>
+        </div>
+            <div class="header-right">
+                <button id="cart-button">
+                    🛒 
+                    <span id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- BARRE DE RECHERCHE -->
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Rechercher des produits...">
+        </div>
+
+        <!-- CATÉGORIES -->
+        <section class="categories">
+            <h2>Catégories</h2>
+            <div class="categories-grid">
+                <div class="category" data-category="all">🏪 Tout</div>
+                <div class="category" data-category="electronics">📱 Électronique</div>
+                <div class="category" data-category="fashion">👗 Mode</div>
+                <div class="category" data-category="home">🏠 Maison</div>
+            </div>
+        </section>
+
+        <!-- PRODUITS -->
+        <section class="products">
+            <h2>Produits populaires</h2>
+            <div id="products-list" class="products-grid">
+                <!-- Les produits seront ajoutés ici par JavaScript -->
+            </div>
+        </section>
+
+        <!-- PAGE PANIER (CACHÉE PAR DÉFAUT) -->
+        <div id="cart-page" class="page hidden">
+            <h2>Mon Panier</h2>
+            <div id="cart-items">
+                <!-- Produits du panier ici -->
+            </div>
+            <div class="cart-total">
+                <strong>Total: <span id="total-price">0 FCFA</span></strong>
+            </div>
+            <button class="buy-button">Acheter maintenant</button>
+        </div>
+
+        <!-- PAGE FAVORIS (CACHÉE PAR DÉFAUT) -->
+        <div id="favorites-page" class="page hidden">
+            <h2>Mes Favoris</h2>
+            <div id="favorites-list" class="products-grid">
+                <!-- Favoris ici -->
+            </div>
+        </div>
+
+        <!-- PAGE VENDEUR (CACHÉE PAR DÉFAUT) -->
+        <div id="seller-page" class="page hidden">
+            <h2>Espace Vendeur</h2>
+            
+            <!-- Statistiques vendeur -->
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Ventes totales</h3>
+                    <p class="stat-number">1,245,000 FCFA</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Commandes</h3>
+                    <p class="stat-number">47</p>
+                </div>
+            </div>
+
+            <!-- Formulaire d'ajout de produit -->
+            <div class="add-product-form">
+                <h3>Ajouter un produit</h3>
+                
+                <!-- Upload de photo -->
+                <div class="photo-upload-section">
+                    <label>Photos du produit (jusqu'à 5 photos)</label>
+                    <div class="photo-upload-grid">
+                        <div class="photo-upload-box" onclick="selectPhoto(0)">
+                            <input type="file" id="photo-0" accept="image/*" style="display: none;" onchange="previewPhoto(0)">
+                            <div class="upload-content">
+                                <span class="upload-icon">📷</span>
+                                <p>Photo principale</p>
+                            </div>
+                            <img id="preview-0" class="photo-preview" style="display: none;">
+                        </div>
+                        <div class="photo-upload-box" onclick="selectPhoto(1)">
+                            <input type="file" id="photo-1" accept="image/*" style="display: none;" onchange="previewPhoto(1)">
+                            <div class="upload-content">
+                                <span class="upload-icon">📷</span>
+                                <p>Photo 2</p>
+                            </div>
+                            <img id="preview-1" class="photo-preview" style="display: none;">
+                        </div>
+                        <div class="photo-upload-box" onclick="selectPhoto(2)">
+                            <input type="file" id="photo-2" accept="image/*" style="display: none;" onchange="previewPhoto(2)">
+                            <div class="upload-content">
+                                <span class="upload-icon">📷</span>
+                                <p>Photo 3</p>
+                            </div>
+                            <img id="preview-2" class="photo-preview" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <input type="text" id="new-product-name" placeholder="Nom du produit">
+                <input type="number" id="new-product-price" placeholder="Prix en FCFA">
+                <select id="new-product-category">
+                    <option value="">Choisir catégorie</option>
+                    <option value="electronics">Électronique</option>
+                    <option value="fashion">Mode</option>
+                    <option value="home">Maison</option>
+                </select>
+                <input type="number" id="new-product-stock" placeholder="Quantité en stock">
+                
+                <!-- Section localisation -->
+                <div class="location-section">
+                    <label>Localisation de votre boutique</label>
+                    <input type="text" id="seller-address" placeholder="Adresse complète (ex: Cocody, Abidjan)">
+                    <input type="text" id="seller-city" placeholder="Ville">
+                    <select id="seller-country">
+                        <option value="">Pays</option>
+                        <option value="CI">Côte d'Ivoire</option>
+                        <option value="SN">Sénégal</option>
+                        <option value="BF">Burkina Faso</option>
+                        <option value="ML">Mali</option>
+                        <option value="BJ">Bénin</option>
+                        <option value="TG">Togo</option>
+                        <option value="NE">Niger</option>
+                        <option value="GW">Guinée-Bissau</option>
+                    </select>
+                    <input type="tel" id="seller-phone" placeholder="Téléphone de contact (ex: +225 07 12 34 56 78)">
+                    <button type="button" id="get-location-btn">📍 Utiliser ma position actuelle</button>
+                </div>
+                
+                <textarea id="new-product-description" placeholder="Description détaillée du produit..."></textarea>
+                
+                <!-- Options de livraison -->
+                <div class="delivery-options">
+                    <label>Options de livraison</label>
+                    <div class="delivery-checkboxes">
+                        <label><input type="checkbox" id="delivery-pickup"> Retrait en boutique</label>
+                        <label><input type="checkbox" id="delivery-local"> Livraison locale (+500 FCFA)</label>
+                        <label><input type="checkbox" id="delivery-national"> Livraison nationale (+2000 FCFA)</label>
+                    </div>
+                </div>
+                
+                <button id="add-product-btn">Publier le produit</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MENU NAVIGATION EN BAS -->
+    <nav class="bottom-menu">
+        <button onclick="showPage('home')" class="nav-btn active">
+            🏠<br><span>Accueil</span>
+        </button>
+        <button onclick="showPage('favorites')" class="nav-btn">
+            ❤️<br><span>Favoris</span>
+        </button>
+        <button onclick="showPage('cart')" class="nav-btn">
+            🛒<br><span>Panier</span>
+        </button>
+        <button onclick="showPage('seller')" class="nav-btn">
+            📊<br><span>Vendeur</span>
+        </button>
+    </nav>
+
+    <!-- LIEN VERS LE JAVASCRIPT -->
+    <script src="script.js"></script>
+</body>
+</html>
